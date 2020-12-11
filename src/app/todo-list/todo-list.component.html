@@ -1,0 +1,54 @@
+
+<button type="button" class="btn btn-success little-margin" style="margin: 5px;" (click)="newTaskClicked()" *ngIf="!showForm">New Todo</button>
+<button type="button" class="btn btn-danger little-margin" style="margin: 5px;" (click)="newTaskClicked()" *ngIf="showForm">Cancel</button>
+<app-add-task-form *ngIf="showForm"></app-add-task-form>
+<br>
+<br>
+<h1 *ngIf="(todos | currentTasks).length > 0">Current Tasks</h1>
+<h3 *ngIf="(todos | currentTasks).length <= 0">No Current tasks here.... Try creating some!</h3>
+
+
+<ngb-accordion #incompleted="ngbAccordion" activeIds="ngb-panel-0" [closeOthers]="true">
+    <ngb-panel *ngFor="let todo of todos | currentTasks" >
+        <ng-template ngbPanelHeader>
+
+            <div class="d-flex align-items-center justify-content-between">
+                <h5 class="m-0">{{todo.title}}</h5>
+                <button class="btn btn-link p-0" ngbPanelToggle>Show Details</button>
+            </div>
+        </ng-template>
+        <ng-template ngbPanelContent>
+            {{todo.content}}
+
+            <br><br><br>
+            <button type="button" class="btn btn-primary little-margin" style="margin: 5px;" (click)="toggleTodo(todo.id)">Mark as Complete</button>
+            <button type="button" class="btn btn-danger little-margin" style="margin: 5px;" (click)="deleteTodo(todo.id)">Delete</button>
+        </ng-template>
+    </ngb-panel>
+</ngb-accordion>
+
+<br>
+<h1 *ngIf="(todos | completed).length > 0">Completed</h1>
+
+
+<ngb-accordion #completed="ngbAccordion" activeIds="ngb-panel-1" [closeOthers]="true">
+    <ngb-panel *ngFor="let todo of todos | completed">
+
+        <ng-template ngbPanelHeader>
+
+            <div class="d-flex align-items-center justify-content-between">
+                <h5 class="m-0">{{todo.title}}</h5>
+                <button class="btn btn-link p-0" ngbPanelToggle>Show Details</button>
+            </div>
+        </ng-template>
+        <ng-template ngbPanelContent>
+            {{todo.content}}
+
+            <br><br><br>
+            <button type="button" class="btn btn-primary little-margin" style="margin: 5px;" (click)="toggleTodo(todo.id)">Unmark as complete</button>
+            <button type="button" class="btn btn-danger little-margin" style="margin: 5px;" (click)="deleteTodo(todo.id)">Delete</button>
+        </ng-template>
+
+
+    </ngb-panel>
+</ngb-accordion>
