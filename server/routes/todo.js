@@ -84,6 +84,7 @@ router.post("/", (req, res) => {
 // find and delete a todo
 router.post("/findAndDelete", (req, res) => {
   const id = req.body.id;
+  console.log(" The id is " + id);
   if (id == null) {
     res.status(500).json({
       msg: "Please provide the id in the body of the request",

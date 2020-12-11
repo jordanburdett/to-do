@@ -49,19 +49,19 @@ export class TodoService {
   // delete
   public deleteTodo(id: number) {
     const index = this.todos.findIndex(item => item.id === id);
-    
-    this.todos.splice(index, 1);
 
     // send all the todos to the server for updating the database
     this.http.post("http://localhost:3000/api/todo/findAndDelete", { id: this.todos[index].id }).subscribe((response: {msg: String, result: any}) => {
       console.log("Deleted successfully");
     })
 
+    this.todos.splice(index, 1);
+
     this.onTodosChange.next(this.todos.slice());
   }
 
   public addTodo(newTodo: TodoItem) {
-    newTodo.id = this.todos.length;
+    newTodo.id = Date.now();
     this.todos.push(newTodo);
 
     this.onTodosChange.next(this.todos.slice());
